@@ -39,5 +39,4 @@ const up = async () => {
     console.log("Seed Sucessful");
 };
 
-up();
 module.exports = up();
