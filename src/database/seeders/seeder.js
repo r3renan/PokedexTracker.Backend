@@ -1,15 +1,17 @@
-const P = require("./pokeApi");
-const models = require("../database/models");
+const P = require("../../services/pokeApi");
+const models = require("../models");
 
-module.exports = {
-    async getData(i) {
+const up = async () => {
+    models.sequelize.sync();
+
+    for (i = 1; i <= 807; i++) {
         if (
             await models.Pokemon.findOne({
                 where: { id: i },
             })
         ) {
             console.log(`Pokemon No ${i} already exists, skipping...`);
-            return;
+            continue;
         }
 
         console.log(`Fetching info from PokeAPI about Pokemon No ${i}`);
@@ -30,8 +32,12 @@ module.exports = {
         await models.Sprite.create(
             Object.assign(pkmnInfo.sprites, { PokemonId: i })
         ).catch((err) => console.log(err));
+        continue;
+    }
 
-        console.log(`${pkmnInfo.name} has been added to table Pokemons`);
-        return;
-    },
+    models.sequelize.close();
+    console.log("Seed Sucessful");
 };
+
+up();
+module.exports = up();

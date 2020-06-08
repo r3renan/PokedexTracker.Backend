@@ -1,5 +1,5 @@
 const models = require("../database/models");
-const Sequelize = require("sequelize");
+const db = require("../database/models/index");
 
 module.exports = {
     async findPokemon(req, res) {
@@ -13,8 +13,10 @@ module.exports = {
             const sprites = await models.Sprite.findOne({
                 where: { PokemonId: pokemon.id },
             });
+            db.sequelize.close();
             return res.json({ pokemon, sprites });
         }
+        db.sequelize.close();
         return res.send("Pokemon nao encontrado");
     },
 };
