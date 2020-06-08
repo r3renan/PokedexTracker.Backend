@@ -3,7 +3,7 @@ const seeder = require("../../services/seeder");
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        for (let i = 252; i <= 386; i++) {
+        for (let i = 650; i <= 721; i++) {
             await seeder.getData(i);
         }
     },

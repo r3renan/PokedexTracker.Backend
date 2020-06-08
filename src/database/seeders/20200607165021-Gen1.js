@@ -1,11 +1,10 @@
 "use strict";
-const getData = require("../../services/getData");
+const seeder = require("../../services/seeder");
 
 module.exports = {
     async up(queryInterface, Sequelize) {
         for (let i = 1; i <= 151; i++) {
-            console.log(`Fetching info from PokeAPI about Pokemon No ${i}`);
-            await getData.byName(i);
+            await seeder.getData(i);
         }
     },
 
