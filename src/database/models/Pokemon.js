@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             name: DataTypes.STRING,
             types: DataTypes.ARRAY(DataTypes.STRING),
         },
-        {}
+        { timestamps: false }
     );
     Pokemon.associate = function (models) {
-        // associations can be defined here
+        Pokemon.hasOne(models.Sprite);
     };
     return Pokemon;
 };

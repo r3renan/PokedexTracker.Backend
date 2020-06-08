@@ -9,6 +9,8 @@ module.exports = {
                     model: "Pokemons",
                     key: "id",
                 },
+                onUpdate: "CASCADE",
+                onDelete: "CASCADE",
             },
             front_default: {
                 type: Sequelize.STRING,
@@ -33,14 +35,6 @@ module.exports = {
             },
             back_shiny_female: {
                 type: Sequelize.STRING,
-            },
-            createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE,
-            },
-            updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE,
             },
         });
     },

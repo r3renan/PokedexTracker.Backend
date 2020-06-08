@@ -16,10 +16,8 @@ module.exports = (sequelize, DataTypes) => {
             back_female: DataTypes.STRING,
             back_shiny_female: DataTypes.STRING,
         },
-        {}
+        { timestamps: false }
     );
-    Sprite.associate = function (models) {
-        Sprite.belongsTo(models.Pokemon);
-    };
+    Sprite.associate = function (models) {};
     return Sprite;
 };

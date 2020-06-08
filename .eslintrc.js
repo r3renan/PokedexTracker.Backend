@@ -5,10 +5,13 @@ module.exports = {
         es2020: true,
         node: true,
     },
-
-    extends: ["plugin:prettier/recommended"],
+    plugins: ["prettier", "json"],
+    extends: ["plugin:prettier/recommended", "plugin:json/recommended"],
     parserOptions: {
         ecmaVersion: 11,
     },
-    rules: {},
+    rules: {
+        "json/*": ["error", "allowComments"],
+        "prettier/prettier": "error",
+    },
 };
