@@ -3,38 +3,35 @@ const path = require("path");
 const fs = require("fs");
 var pData = [];
 var sData = [];
+var tData = [];
+var ptData = [];
 
 //Fetch data from PokeAPI
-const fetchData = async (i) => {
+const fetchPokemonData = async (i) => {
     console.log("Fetching data for pokemon " + i);
     const pokemonData = await P.getPokemonByName(i);
     return pokemonData;
 };
 
-const generate = async (nStart, nMax) => {
-    pData = [];
-    sData = [];
+const generatePokemonData = async () => {
     //Loops for the specified range (e.g. 1-151 (Generation I))
-    for (let n = nStart; n <= nMax; n++) {
-        const pokemon = await fetchData(n);
+    for (let i = 1; i <= 807; i++) {
+        const pokemon = await fetchPokemonData(i);
 
         //Filter stuff, can be changed later for more information
         pData.push({
             id: pokemon.id,
             name: pokemon.name,
+        });
+        sData.push(Object.assign({ pokemonId: pokemon.id }, pokemon.sprites));
+        ptData.push({
+            id: pokemon.id,
             types: pokemon.types.map((o) => o.type.name),
         });
-        sData.push(Object.assign({ PokemonId: pokemon.id }, pokemon.sprites));
     }
 
-    //Writes all data to a json file
     fs.writeFile(
-        path.resolve(
-            "src",
-            "database",
-            "seeds",
-            `${nStart}To${nMax}PokemonSeed.json`
-        ),
+        path.resolve("src", "database", "seeds", "PokemonSeed.json"),
         JSON.stringify(pData), //File content needs to be a string
         (err) => {
             if (err) console.log(err);
@@ -42,33 +39,47 @@ const generate = async (nStart, nMax) => {
     );
 
     fs.writeFile(
-        path.resolve(
-            "src",
-            "database",
-            "seeds",
-            `${nStart}To${nMax}SpriteSeed.json`
-        ),
+        path.resolve("src", "database", "seeds", "SpriteSeed.json"),
         JSON.stringify(sData), //File content needs to be a string
         (err) => {
             if (err) console.log(err);
         }
     );
 
-    console.log(`Generated json seeds for pokemons ${nStart} to ${nMax}`);
+    fs.writeFile(
+        path.resolve("src", "database", "seeds", "PokemonTypesSeed.json"),
+        JSON.stringify(ptData), //File content needs to be a string
+        (err) => {
+            if (err) console.log(err);
+        }
+    );
+
+    console.log("Generated json seeds for pokemons 1 ~ 807");
+};
+
+const generateTypeData = async () => {
+    for (let i = 1; i <= 18; i++) {
+        console.log("Fetching data from type " + i);
+        const type = await P.getTypeByName(i);
+        tData.push({ name: type.name });
+    }
+
+    fs.writeFile(
+        path.resolve("src", "database", "seeds", "TypesSeed.json"),
+        JSON.stringify(tData),
+        (err) => {
+            if (err) console.log(err);
+        }
+    );
 };
 
 //Gen I - VII
 
-const seedByGeneration = async () => {
-    await generate(1, 151);
-    await generate(152, 251);
-    await generate(252, 386);
-    await generate(387, 493);
-    await generate(494, 649);
-    await generate(650, 721);
-    await generate(722, 807);
+const seed = async () => {
+    await generatePokemonData();
+    await generateTypeData();
     console.log("Finished");
     process.exitCode = 0;
 };
 
-seedByGeneration();
+module.exports = seed();

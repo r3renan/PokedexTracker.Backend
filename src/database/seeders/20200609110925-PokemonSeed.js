@@ -1,9 +1,9 @@
 "use strict";
-const sSeed = require("../seeds/Gen1SpriteSeed.json");
+const pSeed = require("../seeds/PokemonSeed.json");
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.bulkInsert("Sprites", sSeed);
+        return queryInterface.bulkInsert("Pokemons", pSeed);
     },
 
     down: (queryInterface, Sequelize) => {},

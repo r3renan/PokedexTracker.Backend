@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     const Sprite = sequelize.define(
         "Sprite",
         {
-            PokemonId: {
+            pokemonId: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
             },
