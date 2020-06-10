@@ -1,4 +1,4 @@
-const P = require("./pokeApi");
+const P = require("../services/pokeApi");
 const path = require("path");
 const fs = require("fs");
 var pData = [];
