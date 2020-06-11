@@ -1,4 +1,3 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
     const Sprite = sequelize.define(
         "Sprite",
@@ -18,6 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         { timestamps: false }
     );
-    Sprite.associate = function (models) {};
+    Sprite.associate = models => {};
     return Sprite;
 };

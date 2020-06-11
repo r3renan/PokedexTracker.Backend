@@ -1,4 +1,3 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
     const PokemonTypes = sequelize.define(
         "PokemonTypes",
@@ -8,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         { timestamps: false }
     );
-    PokemonTypes.associate = function (models) {
+    PokemonTypes.associate = models => {
         PokemonTypes.belongsTo(models.Pokemon, { foreignKey: "pokemonId" });
         PokemonTypes.belongsTo(models.Type, { foreignKey: "typeId" });
     };

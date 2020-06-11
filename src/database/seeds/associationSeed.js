@@ -1,8 +1,9 @@
 const ptSeed = require("./PokemonTypesSeed.json");
 const models = require("../models");
-const Pokemon = models.Pokemon;
-const Type = models.Type;
-const User = models.User;
+
+const { Pokemon } = models;
+const { Type } = models;
+const { User } = models;
 
 const tenRndmPkmns = () => {
     const idArr = new Set();
@@ -17,22 +18,22 @@ const tenRndmPkmns = () => {
 };
 
 const pkmnTypeAssociation = () => {
-    ptSeed.forEach((o) =>
+    ptSeed.forEach(o =>
         Type.findAll({
             where: { name: o.types },
             logging: false,
-        }).then((types) =>
+        }).then(types =>
             Pokemon.findOne({
                 where: { id: o.id },
                 logging: false,
-            }).then((pokemon) => pokemon.setTypes(types, { logging: false }))
+            }).then(pokemon => pokemon.setTypes(types, { logging: false }))
         )
     );
 };
 
 const userPkmnAssociation = () => {
-    User.findAll({ logging: false }).then((users) => {
-        users.forEach((user) => {
+    User.findAll({ logging: false }).then(users => {
+        users.forEach(user => {
             user.setPokemons(tenRndmPkmns(), { logging: false });
         });
     });

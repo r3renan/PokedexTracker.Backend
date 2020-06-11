@@ -1,4 +1,3 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
     const Pokedex = sequelize.define(
         "Pokedex",
@@ -8,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         { freezeTableName: true }
     );
-    Pokedex.associate = function (models) {
+    Pokedex.associate = models => {
         Pokedex.belongsTo(models.User, { foreignKey: "userId" });
         Pokedex.belongsTo(models.Pokemon, { foreignKey: "pokemonId" });
     };

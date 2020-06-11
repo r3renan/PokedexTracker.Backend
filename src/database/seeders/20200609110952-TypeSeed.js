@@ -1,4 +1,3 @@
-"use strict";
 const tSeed = require("../seeds/TypesSeed.json");
 
 module.exports = {

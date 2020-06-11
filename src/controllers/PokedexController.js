@@ -1,7 +1,6 @@
 const models = require("../database/models");
-const Pokemon = models.Pokemon;
-const User = models.User;
-const Pokedex = models.Pokedex;
+
+const { Pokemon, User, Pokedex } = models;
 
 module.exports = {
     async registerPokemon(req, res) {
@@ -10,6 +9,9 @@ module.exports = {
             attributes: { exclude: ["password"] },
             include: [{ association: "pokemons", through: { attributes: [] } }],
         });
+
+        if (!user) return res.send("Unexpected error (User not found)");
+
         const pokemon = await Pokemon.findOne({
             where: { id: req.params.pokemon },
         });
@@ -40,6 +42,10 @@ module.exports = {
         const user = await User.findOne({
             where: { name: req.headers.auth },
         });
+
+        if (!user) {
+            return res.send("Unexpected error (User not found)");
+        }
 
         const deleted = await Pokedex.destroy({
             where: { pokemonId: pokemon.id, userId: user.id },

@@ -1,17 +1,20 @@
 module.exports = {
     env: {
-        browser: true,
         commonjs: true,
         es2020: true,
         node: true,
     },
-    plugins: ["prettier", "json"],
-    extends: ["plugin:prettier/recommended", "plugin:json/recommended"],
+    extends: ["airbnb-base", "plugin:prettier/recommended"],
+    globals: {
+        Atomics: "readonly",
+        SharedArrayBuffer: "readonly",
+    },
+    parser: "babel-eslint",
     parserOptions: {
         ecmaVersion: 11,
     },
     rules: {
-        "json/*": ["error", "allowComments"],
-        "prettier/prettier": "error",
+        "import/prefer-default-export": "off",
+        "no-plusplus": "off",
     },
 };

@@ -1,4 +1,3 @@
-"use strict";
 const pSeed = require("../seeds/PokemonSeed.json");
 
 module.exports = {

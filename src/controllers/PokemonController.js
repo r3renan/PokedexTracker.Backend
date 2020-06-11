@@ -1,5 +1,6 @@
 const models = require("../database/models");
-const Pokemon = models.Pokemon;
+
+const { Pokemon } = models;
 
 module.exports = {
     async findPokemon(req, res) {
@@ -8,7 +9,7 @@ module.exports = {
             // Checks if param is a number (Pokemon ID) or a string
             where: Number.isNaN(Number(p)) ? { name: p } : { id: p },
             include: ["sprite", "types"],
-        });
+        }).then(pokemon => pokemon || "Pokemon not found");
         return res.json(result);
     },
 
@@ -25,13 +26,13 @@ module.exports = {
             ],
             attributes: [],
         })
-            .then((pokemon) => pokemon.sprite)
-            .catch((err) => "Pokemon not found");
+            .then(pokemon => pokemon.sprite)
+            .catch(() => "Pokemon not found");
         return res.json(result);
     },
 
     async showAllPokemonsByType(req, res) {
-        const type = req.params.type;
+        const { type } = req.params;
         const result = await Pokemon.findAll({
             // Checks if param is a number (Type ID) or a string
             where: Number.isNaN(Number(type))
@@ -39,7 +40,7 @@ module.exports = {
                 : { "$types.id$": type },
             include: [{ association: "types", attributes: [] }],
             order: [["id", "ASC"]],
-        });
+        }).then(pokemons => pokemons || "Type not found");
         return res.json(result);
     },
 };

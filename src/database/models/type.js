@@ -1,4 +1,3 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
     const Type = sequelize.define(
         "Type",
@@ -7,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         { timestamps: false }
     );
-    Type.associate = function (models) {
+    Type.associate = models => {
         Type.belongsToMany(models.Pokemon, {
             through: "PokemonTypes",
             foreignKey: "typeId",

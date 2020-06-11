@@ -1,4 +1,3 @@
-"use strict";
 const sSeed = require("../seeds/SpriteSeed.json");
 
 module.exports = {

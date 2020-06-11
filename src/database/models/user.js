@@ -1,4 +1,3 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(
         "User",
@@ -9,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {}
     );
-    User.associate = function (models) {
+    User.associate = models => {
         User.belongsToMany(models.Pokemon, {
             through: "Pokedex",
             foreignKey: "userId",
